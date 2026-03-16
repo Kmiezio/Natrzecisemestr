@@ -1,64 +1,98 @@
-*{
-    margin : 0;
-    padding : 0;
-    box-sizing : border-box;
-}
+
 body {
-    background-color: #1f232e;
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #d9d9d9;
+     margin: 0; 
 }
 
-.deck-wrapper {
-    display : flex ;
-    min-height : 100vh ;
-}
-nav {
-    width: 250px;
-    background-color: #161920 ;
-    padding : 40px 20px ;
+
+header {
+    
+    background-color: #ff5757;
+    width: 100%;
+    float:left ;
 }
 
-.side-menu li {
-    list-style : none ;
-    margin-bottom : 25px ;
-}
 
-.side-menu a {
-    color : #8a8d91 ;
-    text-decoration: none ;
-    font-weight : bold ;
-    font-size : 1.2rem ;
-    transition : 0.3s ;
-}
-
-.side-menu a:hover {
-    color: #0040ff
-} 
 
 main {
-    flex-grow : 1 ;
-    padding : 40px ;
+    
 }
-.game-placeholder {
-    background: #2a3139;
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid #3d4450;
+
+/* Lewy blok */
+.game-info {
+
+    background-color: #ff5757;
+    width: 30%;
+    min-height: 1000px;
+    float:left ;
 }
-button {
-    background-color : #00adee ;
-    color : white ;
-    border : none ;
-    padding : 12px 40px;
-    border-radius : 8px ;
-    font-weight : bold ;
-    cursor : pointer ;
-    font-size : 16px ;
-    transition : 0.3s ;
+
+/* Prawy blok */
+.library-grid {
+
+    background-color: #ff5757;
+    width: 70%;
+    min-height: 1000px;
+    float:left ;
 }
-    button:hover {
-        background-color: #008fbc ;
-        transform: scale(1.05) ;
-        box-shadow : 0 0 20px rgba(0, 173, 238, 0.4);
-    }
+
+
+
+
+footer {
+
+    background-color: #ff5757;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    float:left ;
+}
+
+
+
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.menu {
+    position: relative;
+    width: 200px;
+}
+
+/* przycisk */
+.menu summary {
+    background: white;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+}
+
+/* rozwijane menu */
+.menu ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    background: white;
+    width: 200px;
+
+    border: 1px solid #ccc;
+    z-index: 10;
+}
+
+.menu li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.menu li a:hover {
+    background: #eee;
+}
