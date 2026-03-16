@@ -24,19 +24,19 @@ nav {
     margin-bottom : 25px ;
 }
 
-side-menu a {
+.side-menu a {
     color : #8a8d91 ;
     text-decoration: none ;
     font-weight : bold ;
-    font-size : 1,2rem ;
+    font-size : 1.2rem ;
     transition : 0.3s ;
 }
 
-.side-menu a :hover {
+.side-menu a:hover {
     color: #0040ff
 } 
 
-mian {
+main {
     flex-grow : 1 ;
     padding : 40px ;
 }
