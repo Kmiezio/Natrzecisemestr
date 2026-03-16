@@ -1,0 +1,64 @@
+*{
+    margin : 0;
+    padding : 0;
+    box-sizing : border-box;
+}
+body {
+    background-color: #1f232e;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.deck-wrapper {
+    display : flex ;
+    min-height : 100vh ;
+}
+nav {
+    width: 250px;
+    background-color: #161920 ;
+    padding : 40px 20px ;
+}
+
+.side-menu li {
+    list-style : none ;
+    margin-bottom : 25px ;
+}
+
+side-menu a {
+    color : #8a8d91 ;
+    text-decoration: none ;
+    font-weight : bold ;
+    font-size : 1,2rem ;
+    transition : 0.3s ;
+}
+
+.side-menu a :hover {
+    color: #0040ff
+} 
+
+mian {
+    flex-grow : 1 ;
+    padding : 40px ;
+}
+.game-placeholder {
+    background: #2a3139;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #3d4450;
+}
+button {
+    background-color : #00adee ;
+    color : white ;
+    border : none ;
+    padding : 12px 40px;
+    border-radius : 8px ;
+    font-weight : bold ;
+    cursor : pointer ;
+    font-size : 16px ;
+    transition : 0.3s ;
+}
+    button:hover {
+        background-color: #008fbc ;
+        transform: scale(1.05) ;
+        box-shadow : 0 0 20px rgba(0, 173, 238, 0.4);
+    }
