@@ -7,22 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        
-            <details class="menu">
-                <summary>STRONA ☰</summary>
-                <ul class="side-menu">
-                    <li><a href="index.html">HOME🏚️</a></li>
-                    <li><a href="artykuly.html">ARTYKULY📑</a></li>
-                    <li><a href="kontakt.html">KONTAKT🧑‍🦱</a></li>
-                </ul>
-            </details>
+    <header class="header">
+        <div class="header-menu-container">
+            <button class="header-menu-btn">☰ MENU</button>
+            
+            <div class="header-menu">
+                <a href="index.html">HOME🏚️</a>
+                <a href="artykuly.html">ARTYKULY📑</a>
+                <a href="kontakt.html">KONTAKT🧑</a>
+            </div>
+        </div>
 
+        <div class="header-title">
             <h3 id="page-title">Natrzecisemestr</h3>
-            <form action="" method="get" id="wyszukiwarka">
-                <input type="text" name="search" id="search" placeholder="Szukaj">
+        </div>
+
+        <div class="header-search-box">
+            <form action="" method="get" id="search-box">
+                <input type="text" name="search" id="search-input" placeholder="Szukaj">
             </form>
-        
+        </div>
     </header>
 
     <main>
@@ -49,8 +53,40 @@
         </div>
     </main>
 
-    <footer>
-        <p>footer - Natrzecisemestr 2026</p>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Natrzecisemestr</h3>
+                <p>Strona z informacjami o grach na steamie.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Nawigacja</h4>
+                <a href="index.html">HOME</a>
+                <a href="artykuly.html">ARTYKULY</a>
+                <a href="kontakt.html">KONTAKT</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Autorzy</h4>
+                <p>Mateusz Tomczuk</p>
+                <p>Jakub Miezio</p>
+                <p>Kuba Kirej</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2026 Natrzecisemestr
+        </div>
     </footer>
+
+    <script>
+        const menuBtn = document.querySelector('.header-menu-btn');
+        const menuDropdown = document.querySelector('.header-menu');
+
+        menuBtn.addEventListener('click', () => {
+            menuDropdown.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
