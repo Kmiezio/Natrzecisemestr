@@ -1,9 +1,23 @@
 const API_URL = "https://www.cheapshark.com/api/1.0/deals?storeID=1";
 
-function WyswietlanieGier() {
+const wyszukiwarka = document.getElementById("search-box");
+const wpisane = document.getElementById("search-input");
+
+wyszukiwarka.addEventListener("submit", (event) => 
+{
+    event.preventDefault();
+    const wpisanyTekst = wpisane.value.trim();
+    if(wpisanyTekst !== "")
+    {
+        const SZUKANA = `https://www.cheapshark.com/api/1.0/deals?title=${wpisanyTekst}`;
+        WyswietlanieGier(SZUKANA);
+    }
+});
+
+function WyswietlanieGier(ZmiennyApi) {
     const glownykontener = document.querySelector(".main-section-center");
 
-    fetch(API_URL)
+    fetch(ZmiennyApi)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Błąd ładowania danych z API");
@@ -63,4 +77,5 @@ function WyswietlanieGier() {
         });
 }
 
-document.addEventListener("DOMContentLoaded", WyswietlanieGier);
+document.addEventListener("DOMContentLoaded", () =>{ WyswietlanieGier(API_URL);
+});
