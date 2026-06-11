@@ -33,18 +33,18 @@
 			<div class="main-section">
 				<div class="main-section-center">
 					<h2>BAZA I RECENZJE GIER</h2>
-					<p>Filtruj zestawienia i bazy gier według Twojej ulubionej platformy:</p>
+					<p id="opis-sekcji">Filtruj zestawienia i bazy gier według Twoich kryteriów:</p>
 
-					<div class="filter-container">
+					<div class="filter-container" id="kontener-filtrow">
 						<button class="filter-btn active" data-platform="all">Wszystkie Gry</button>
-						<button class="filter-btn" data-platform="pc">Tylko PC 💻</button>
-						<button class="filter-btn" data-platform="deck">Steam Deck 🎮</button>
-						<button class="filter-btn" data-platform="multi">Multiplayer 👥</button>
+						<button class="filter-btn" data-platform="cheap">
+							Tanie okazje (< 5$)</button>
+						<button class="filter-btn" data-platform="deck">Super Zniżki (> 70%)</button>
 					</div>
 
 					<ul id="kontener-gier-artykuly" class="games-list" style="padding: 0; list-style: none;"></ul>
 
-					<div class="load-more-box">
+					<div class="load-more-box" id="sekcja-wiecej">
 						<button id="load-more-btn">ZAŁADUJ WIĘCEJ GIER ⏳</button>
 					</div>
 				</div>
@@ -84,81 +84,132 @@
 		</script>
 
 		<script>
-			const bazaGier = [
-			{ id: 1, title: "Wiedźmin 3: Dziki Gon", platform: "pc", desc: "Najlepsza polska gra RPG wszech czasów. Rewelacyjna fabuła i ogromny, otwarty świat." },
-			{ id: 2, title: "Hades II", platform: "deck", desc: "Genialny roguelike, który działa w stałych 60 FPS na Steam Decku. Idealny do zabrania w podróż." },
-			{ id: 3, title: "Counter-Strike 2", platform: "multi", desc: "Kultowa strzelanka sieciowa. Sprawdź najnowsze taktyki oraz rozkład zmian w silniku Source 2." },
-			{ id: 4, title: "Cyberpunk 2077", platform: "pc", desc: "Futurystyczne Night City po patchu 2.1 wygląda niesamowicie i wyciska max z kart graficznych." },
-			{ id: 5, title: "Vampire Survivors", platform: "deck", desc: "Prosta, uzależniająca gierka. Kosztuje grosze, a potrafi wciągnąć na ekranie Steam Decka na setki godzin." },
-			{ id: 6, title: "Helldivers 2", platform: "multi", desc: "Znakomita kooperacyjna gra akcji. Walcz ze znajomymi o demokrację w galaktyce." }
-			];
-
-			let wybranaPlatforma = "all";
-			let limitWyswietlania = 2;
-
 			const kontener = document.getElementById("kontener-gier-artykuly");
 			const przyciskWiecej = document.getElementById("load-more-btn");
-			const przyciskiFiltrow = document.querySelectorAll(".filter-btn");
+			const filtryWrapper = document.getElementById("kontener-filtrow");
+			const sekcjaWiecej = document.getElementById("sekcja-wiecej");
+			const naglowekSekcji = document.querySelector(".main-section-center h2");
+			const opisSekcji = document.getElementById("opis-sekcji");
 
-			function renderujGry() {
-			// Bezpieczne czyszczenie metodą węzłów DOM
-			while (kontener.firstChild) {
-			kontener.removeChild(kontener.firstChild);
-			}
+			const urlParams = new URLSearchParams(window.location.search);
+			const dynamicznyDealID = urlParams.get('dealID');
 
-			const przefiltrowaneGry = bazaGier.filter(gra => {
-			if (wybranaPlatforma === "all") return true;
-			return gra.platform === wybranaPlatforma;
-			});
+			let pobraneGryAPI = [];
+			let limitWyswietlania = 3;
+			let aktualnyFiltr = "all";
 
-			const gryDoPokazania = przefiltrowaneGry.slice(0, limitWyswietlania);
+			if (dynamicznyDealID) {
+			filtryWrapper.style.display = "none";
+			sekcjaWiecej.style.display = "none";
+			naglowekSekcji.textContent = "SZCZEGÓŁY WYBRANEJ OFERTY";
+			opisSekcji.textContent = "Pełne informacje o wybranym tytule pobrane na żywo z bazy danych.";
 
-			gryDoPokazania.forEach(gra => {
+			fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dynamicznyDealID}`)
+			.then(res => res.json())
+			.then(szczegoly => {
+			const gra = szczegoly.gameInfo;
+
 			const punktListy = document.createElement("li");
 			punktListy.style.display = "block";
+			punktListy.style.padding = "20px";
 
 			const naglowekTytulu = document.createElement("strong");
-			naglowekTytulu.textContent = gra.title + " [" + gra.platform.toUpperCase() + "]";
+			naglowekTytulu.textContent = gra.name;
 			naglowekTytulu.style.color = "#00ff66";
-			naglowekTytulu.style.fontSize = "1.2rem";
+			naglowekTytulu.style.fontSize = "1.6rem";
 			naglowekTytulu.style.display = "block";
-			naglowekTytulu.style.marginBottom = "5px";
+			naglowekTytulu.style.removeAttributeValue;
+			naglowekTytulu.style.marginBottom = "15px";
 
-			const opisGry = document.createElement("span");
-			opisGry.textContent = gra.desc;
-			opisGry.style.color = "#ccc";
-			opisGry.style.fontSize = "14px";
-			opisGry.style.lineHeight = "1.4";
+			const szczegolowyOpis = document.createElement("span");
+			szczegolowyOpis.style.color = "#ccc";
+			szczegolowyOpis.style.fontSize = "16px";
+			szczegolowyOpis.style.lineHeight = "1.8";
 
-			punktListy.appendChild(naglowekTytulu);
-			punktListy.appendChild(opisGry);
-			kontener.appendChild(punktListy);
-			});
+			szczegolowyOpis.innerHTML = `
+			Aktualna cena w promocji: <strong style="color: #fff; font-size: 1.2rem;">${gra.salePrice} $</strong><br>
+				Standardowa cena detaliczna: <span style="text-decoration: line-through; color: #ff5555;">${gra.retailPrice} $</span><br>
+					Oszczędność przy zakupie: <strong style="color: #00ff66;">${Math.round(((gra.retailPrice - gra.salePrice) / gra.retailPrice) * 100)}%</strong><br>
+						Ocena społeczności Steam: <strong>${gra.steamRatingText || "Brak ocen"}</strong> (${gra.steamRatingPercent}% pozytywnych recenzji)
+						`;
 
-			if (limitWyswietlania >= przefiltrowaneGry.length) {
-			przyciskWiecej.style.display = "none";
-			} else {
-			przyciskWiecej.style.display = "inline-block";
-			}
-			}
+						punktListy.appendChild(naglowekTytulu);
+						punktListy.appendChild(szczegolowyOpis);
+						kontener.appendChild(punktListy);
+						})
+						.catch(() => {
+						kontener.innerHTML = "<p style='color:red;'>Nie udało się załadować danych tej gry.</p>";
+						});
+						} else {
+						naglowekSekcji.textContent = "PRZEGLĄDAJ WSZYSTKIE OKAZJE Z API";
 
-			przyciskWiecej.addEventListener("click", () => {
-			limitWyswietlania += 2;
-			renderujGry();
-			});
+						fetch("https://www.cheapshark.com/api/1.0/deals?storeID=1")
+						.then(res => res.json())
+						.then(dane => {
+						pobraneGryAPI = dane;
+						renderujBazeGier();
+						});
+						}
 
-			przyciskiFiltrow.forEach(przycisk => {
-			przycisk.addEventListener("click", (e) => {
-			przyciskiFiltrow.forEach(b => b.classList.remove("active"));
-			e.target.classList.add("active");
+						function renderujBazeGier() {
+						while (kontener.firstChild) {
+						kontener.removeChild(kontener.firstChild);
+						}
 
-			wybranaPlatforma = e.target.getAttribute("data-platform");
-			limitWyswietlania = 2;
-			renderujGry();
-			});
-			});
+						const przefiltrowane = pobraneGryAPI.filter(gra => {
+						const cena = parseFloat(gra.salePrice);
+						const oszczednosc = parseFloat(gra.savings);
 
-			renderujGry();
+						if (aktualnyFiltr === "cheap") return cena < 5.00;
+                if (aktualnyFiltr === "deck") return oszczednosc > 70.00;
+                return true;
+            });
+
+            const doWyswietlenia = przefiltrowane.slice(0, limitWyswietlania);
+
+            doWyswietlenia.forEach(gra => {
+                const punktListy = document.createElement("li");
+                punktListy.style.display = "block";
+
+                const naglowekTytulu = document.createElement("strong");
+                naglowekTytulu.textContent = gra.title;
+                naglowekTytulu.style.color = "#00ff66";
+                naglowekTytulu.style.fontSize = "1.2rem";
+                naglowekTytulu.style.display = "block";
+                naglowekTytulu.style.marginBottom = "5px";
+
+                const opisGry = document.createElement("span");
+                opisGry.textContent = `Aktualna cena: ${gra.salePrice}$ (Cena normalna: ${gra.normalPrice}$). Obniżka o ${Math.round(gra.savings)}%!`;
+                opisGry.style.color = "#ccc";
+                opisGry.style.fontSize = "14px";
+
+                punktListy.appendChild(naglowekTytulu);
+                punktListy.appendChild(opisGry);
+                kontener.appendChild(punktListy);
+            });
+
+            if (limitWyswietlania >= przefiltrowane.length || przefiltrowane.length === 0) {
+                przyciskWiecej.style.display = "none";
+            } else {
+                przyciskWiecej.style.display = "inline-block";
+            }
+        }
+
+        przyciskWiecej.addEventListener("click", () => {
+            limitWyswietlania += 3;
+            renderujBazeGier();
+        });
+
+        document.querySelectorAll(".filter-btn").forEach(przycisk => {
+            przycisk.addEventListener("click", (e) => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                e.target.classList.add("active");
+
+                aktualnyFiltr = e.target.getAttribute("data-platform");
+                limitWyswietlania = 3;
+                renderujBazeGier();
+            });
+        });
 		</script>
 	</body>
 </html>
