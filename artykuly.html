@@ -1,92 +1,164 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artykuły - Natrzecisemestr</title>
-    <link rel="stylesheet" href="style.css">
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>Artykuły i Gry - Natrzecisemestr</title>
+				<link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header class="header">
-        <div class="header-menu-container">
-            <button class="header-menu-btn">☰ MENU</button>
-            
-            <div class="header-menu">
-                <a href="index.html">HOME🏚️</a>
-                <a href="artykuly.html">ARTYKULY📑</a>
-                <a href="kontakt.html">KONTAKT🧑</a>
-            </div>
-        </div>
+	<body>
+		<header class="header">
+			<div class="header-menu-container">
+				<button class="header-menu-btn">☰ MENU</button>
 
-        <div class="header-title">
-            <h3 id="page-title">Natrzecisemestr</h3>
-        </div>
+				<div class="header-menu">
+					<a href="index.html">HOME🏚️</a>
+					<a href="artykuly.html">ARTYKULY📑</a>
+					<a href="kontakt.html">KONTAKT🧑</a>
+				</div>
+			</div>
 
-        <div class="header-search-box">
-            <form action="" method="get" id="search-box">
-                <input type="text" name="search" id="search-input" placeholder="Szukaj">
+			<div class="header-title">
+				<h3 id="page-title">Natrzecisemestr</h3>
+			</div>
+
+			<div class="header-search-box">
+				<form action="" method="get" id="search-box">
+					<input type="text" name="search" id="search-input" placeholder="Szukaj">
             </form>
-        </div>
-    </header>
+			</div>
+		</header>
 
-    <main>
-        <div class="main-section">
-            <div class="main-section-center">
-                <h2>LISTA ARTYKUŁÓW</h2>
-                <div class="game-info-placeholder">
-                    <h2>NOWOŚCI W SKLEPIE</h2>
-                    <p>Sprawdź najnowsze aktualizacje i promocje gier AAA.</p>
-                    <button>ZOBACZ SKLEP</button>
-                </div>
-                <ul class="games-list">
-                    <li>Top 10 gier</li>
-                    <li>TOP 20 gier na Steam Deck</li>
-                    <li>Top 30 gier multiplayer</li>
-                </ul>
-            </div>
+		<main>
+			<div class="main-section">
+				<div class="main-section-center">
+					<h2>BAZA I RECENZJE GIER</h2>
+					<p>Filtruj zestawienia i bazy gier według Twojej ulubionej platformy:</p>
 
-            <div class="main-section-left">
-            </div>
+					<div class="filter-container">
+						<button class="filter-btn active" data-platform="all">Wszystkie Gry</button>
+						<button class="filter-btn" data-platform="pc">Tylko PC 💻</button>
+						<button class="filter-btn" data-platform="deck">Steam Deck 🎮</button>
+						<button class="filter-btn" data-platform="multi">Multiplayer 👥</button>
+					</div>
 
-            <div class="main-section-right">
-            </div>
-        </div>
-    </main>
+					<ul id="kontener-gier-artykuly" class="games-list" style="padding: 0; list-style: none;"></ul>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Natrzecisemestr</h3>
-                <p>Strona z informacjami o grach na steamie.</p>
-            </div>
+					<div class="load-more-box">
+						<button id="load-more-btn">ZAŁADUJ WIĘCEJ GIER ⏳</button>
+					</div>
+				</div>
+			</div>
+		</main>
 
-            <div class="footer-section">
-                <h4>Nawigacja</h4>
-                <a href="index.html">HOME</a>
-                <a href="artykuly.html">ARTYKULY</a>
-                <a href="kontakt.html">KONTAKT</a>
-            </div>
+		<footer class="footer">
+			<div class="footer-container">
+				<div class="footer-section">
+					<h3>Natrzecisemestr</h3>
+					<p>Strona z informacjami o grach na steamie.</p>
+				</div>
+				<div class="footer-section">
+					<h4>Nawigacja</h4>
+					<a href="index.html">HOME</a>
+					<a href="artykuly.html">ARTYKULY</a>
+					<a href="kontakt.html">KONTAKT</a>
+				</div>
+				<div class="footer-section">
+					<h4>Autorzy</h4>
+					<p>Mateusz Tomczuk</p>
+					<p>Jakub Miezio</p>
+					<p>Kuba Kirej</p>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				&copy; 2026 Natrzecisemestr
+			</div>
+		</footer>
 
-            <div class="footer-section">
-                <h4>Autorzy</h4>
-                <p>Mateusz Tomczuk</p>
-                <p>Jakub Miezio</p>
-                <p>Kuba Kirej</p>
-            </div>
-        </div>
+		<script>
+			const menuBtn = document.querySelector('.header-menu-btn');
+			const menuDropdown = document.querySelector('.header-menu');
+			menuBtn.addEventListener('click', () => {
+			menuDropdown.classList.toggle('active');
+			});
+		</script>
 
-        <div class="footer-bottom">
-            &copy; 2026 Natrzecisemestr
-        </div>
-    </footer>
+		<script>
+			const bazaGier = [
+			{ id: 1, title: "Wiedźmin 3: Dziki Gon", platform: "pc", desc: "Najlepsza polska gra RPG wszech czasów. Rewelacyjna fabuła i ogromny, otwarty świat." },
+			{ id: 2, title: "Hades II", platform: "deck", desc: "Genialny roguelike, który działa w stałych 60 FPS na Steam Decku. Idealny do zabrania w podróż." },
+			{ id: 3, title: "Counter-Strike 2", platform: "multi", desc: "Kultowa strzelanka sieciowa. Sprawdź najnowsze taktyki oraz rozkład zmian w silniku Source 2." },
+			{ id: 4, title: "Cyberpunk 2077", platform: "pc", desc: "Futurystyczne Night City po patchu 2.1 wygląda niesamowicie i wyciska max z kart graficznych." },
+			{ id: 5, title: "Vampire Survivors", platform: "deck", desc: "Prosta, uzależniająca gierka. Kosztuje grosze, a potrafi wciągnąć na ekranie Steam Decka na setki godzin." },
+			{ id: 6, title: "Helldivers 2", platform: "multi", desc: "Znakomita kooperacyjna gra akcji. Walcz ze znajomymi o demokrację w galaktyce." }
+			];
 
-    <script>
-        const menuBtn = document.querySelector('.header-menu-btn');
-        const menuDropdown = document.querySelector('.header-menu');
+			let wybranaPlatforma = "all";
+			let limitWyswietlania = 2;
 
-        menuBtn.addEventListener('click', () => {
-            menuDropdown.classList.toggle('active');
-        });
-    </script>
-</body>
+			const kontener = document.getElementById("kontener-gier-artykuly");
+			const przyciskWiecej = document.getElementById("load-more-btn");
+			const przyciskiFiltrow = document.querySelectorAll(".filter-btn");
+
+			function renderujGry() {
+			// Bezpieczne czyszczenie metodą węzłów DOM
+			while (kontener.firstChild) {
+			kontener.removeChild(kontener.firstChild);
+			}
+
+			const przefiltrowaneGry = bazaGier.filter(gra => {
+			if (wybranaPlatforma === "all") return true;
+			return gra.platform === wybranaPlatforma;
+			});
+
+			const gryDoPokazania = przefiltrowaneGry.slice(0, limitWyswietlania);
+
+			gryDoPokazania.forEach(gra => {
+			const punktListy = document.createElement("li");
+			punktListy.style.display = "block";
+
+			const naglowekTytulu = document.createElement("strong");
+			naglowekTytulu.textContent = gra.title + " [" + gra.platform.toUpperCase() + "]";
+			naglowekTytulu.style.color = "#00ff66";
+			naglowekTytulu.style.fontSize = "1.2rem";
+			naglowekTytulu.style.display = "block";
+			naglowekTytulu.style.marginBottom = "5px";
+
+			const opisGry = document.createElement("span");
+			opisGry.textContent = gra.desc;
+			opisGry.style.color = "#ccc";
+			opisGry.style.fontSize = "14px";
+			opisGry.style.lineHeight = "1.4";
+
+			punktListy.appendChild(naglowekTytulu);
+			punktListy.appendChild(opisGry);
+			kontener.appendChild(punktListy);
+			});
+
+			if (limitWyswietlania >= przefiltrowaneGry.length) {
+			przyciskWiecej.style.display = "none";
+			} else {
+			przyciskWiecej.style.display = "inline-block";
+			}
+			}
+
+			przyciskWiecej.addEventListener("click", () => {
+			limitWyswietlania += 2;
+			renderujGry();
+			});
+
+			przyciskiFiltrow.forEach(przycisk => {
+			przycisk.addEventListener("click", (e) => {
+			przyciskiFiltrow.forEach(b => b.classList.remove("active"));
+			e.target.classList.add("active");
+
+			wybranaPlatforma = e.target.getAttribute("data-platform");
+			limitWyswietlania = 2;
+			renderujGry();
+			});
+			});
+
+			renderujGry();
+		</script>
+	</body>
 </html>

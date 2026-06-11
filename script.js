@@ -15,7 +15,7 @@ wyszukiwarka.addEventListener("submit", (event) =>
 });
 
 function WyswietlanieGier(ZmiennyApi) {
-    const glownykontener = document.querySelector(".main-section-center");
+    const glownykontener = document.getElementById("kontener-gier");
 
     fetch(ZmiennyApi)
         .then(response => {
@@ -25,7 +25,9 @@ function WyswietlanieGier(ZmiennyApi) {
             return response.json();
         })
         .then(gryZApi => {
-            glownykontener.innerHTML = ""; 
+            while (glownykontener.firstChild) {
+                glownykontener.removeChild(glownykontener.firstChild);
+            }
 
             gryZApi.forEach(jednaGra => {
                 const kartagier = document.createElement("div");
@@ -49,9 +51,28 @@ function WyswietlanieGier(ZmiennyApi) {
                 nagluowektytulu.style.margin = "0 0 5px 0";
 
                 const akapitopisu = document.createElement("p");
-                akapitopisu.innerHTML = `Cena: <span style="text-decoration: line-through; color: #ff5555;">${jednaGra.normalPrice} $</span> <span style="font-weight: bold; color: #ffffff;">${jednaGra.salePrice} $</span>`;
                 akapitopisu.style.margin = "0";
                 akapitopisu.style.fontSize = "14px";
+                akapitopisu.style.color = "#ccc";
+
+                const tekstCena = document.createTextNode("Cena: ");
+                
+                const staraCena = document.createElement("span");
+                staraCena.textContent = jednaGra.normalPrice + " $";
+                staraCena.style.textDecoration = "line-through";
+                staraCena.style.color = "#ff5555";
+
+                const spacja = document.createTextNode(" ");
+
+                const nowaCena = document.createElement("span");
+                nowaCena.textContent = jednaGra.salePrice + " $";
+                nowaCena.style.fontWeight = "bold";
+                nowaCena.style.color = "#ffffff";
+
+                akapitopisu.appendChild(tekstCena);
+                akapitopisu.appendChild(staraCena);
+                akapitopisu.appendChild(spacja);
+                akapitopisu.appendChild(nowaCena);
 
                 tekst.appendChild(nagluowektytulu);
                 tekst.appendChild(akapitopisu);
@@ -64,18 +85,24 @@ function WyswietlanieGier(ZmiennyApi) {
         })
         .catch(error => {
             console.error("Szczegóły błędu:", error);
-            const glownykontener = document.querySelector(".main-section-center");
+            const glownykontener = document.getElementById("kontener-gier");
             if (glownykontener) {
-                glownykontener.innerHTML = `
-                    <div style="color: #ff3333; padding: 30px; text-align: center; font-family: Arial; width: 100%;">
-                        <h3>Problem z załadowaniem API!</h3>
-                        <p>Komunikat błędu: ${error.message}</p>
-                        <p style="color: #aaa; font-size: 12px;">Sprawdź, czy masz połączenie z internetem lub czy adres URL jest poprawny.</p>
-                    </div>
-                `;
+                while (glownykontener.firstChild) {
+                    glownykontener.removeChild(glownykontener.firstChild);
+                }
+
+                const napisBledu = document.createElement("p");
+                napisBledu.textContent = "Wystąpił błąd podczas ładowania gier!";
+                napisBledu.style.color = "#ff3333";
+                napisBledu.style.textAlign = "center";
+                napisBledu.style.fontWeight = "bold";
+                napisBledu.style.padding = "20px";
+
+                glownykontener.appendChild(napisBledu);
             }
         });
 }
 
-document.addEventListener("DOMContentLoaded", () =>{ WyswietlanieGier(API_URL);
+document.addEventListener("DOMContentLoaded", () => { 
+    WyswietlanieGier(API_URL);
 });

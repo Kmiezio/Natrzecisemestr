@@ -32,15 +32,21 @@
     <main>
         <div class="main-section">
             <div class="main-section-center">
-            <h2>KONTAKT</h2>
-            <p> Email: <span style="color:#ffffff">SuperPrawdziwyEmail@Linux.Arch </span>
-            <p>Telefon:<span style="color:#ffffff"> 123 456 789</span></p>
             <h2>DANE AUTORÓW</h2>
-            <ul class="games-list">
-                <li><strong>Skład zespołu :</strong>&nbsp; Jakub Miezio, Mateusz Tomczuk, Kuba Kirej</li>
-                <li><strong>Grupa:</strong>&nbsp; Informatyka, Semestr 2</li>
-                <li><strong>Status projektu:</strong>&nbsp; W trakcie realizacji</li>
-            </ul>
+				<ul class="games-list">
+				<li><strong>Skład zespołu :</strong>&nbsp; Jakub Miezio, Mateusz Tomczuk, Kuba Kirej</li>
+				<li><strong>Grupa:</strong>&nbsp; Informatyka, Semestr 2</li>
+				<li><strong>Status projektu:</strong>&nbsp; Ukończony</li>
+				</ul>
+                <h2>Kontakt</h2>
+				<p>Email: <span style="color:#ffffff">SuperPrawdziwyEmail@Linux.Arch </span>
+				<p>Telefon:<span style="color:#ffffff"> 123 456 789</span></p>
+						<h2>WYŚLIJ KOMENTARZ</h2>
+					    <form id="formularz-komentarza">
+					    <input type="text" id="komentarz-input" placeholder="Napisz komentarz" style="width: 100%; max-width: 400px; padding: 10px; background-color: #202020; color: white; border: 2px solid #323232; border-radius: 8px;">
+						<span id="komentarz-error" style="color: red; display: block; margin-top: 5px; font-weight: bold;"></span>
+						<p><button type="submit" style="background-color: #202020; color:#00ff66; padding: 10px 20px; border: 2px solid #323232; border-radius: 8px; cursor: pointer;">Wyślij komentarz</button></p>
+				</form>
             </div>
         </div>
     </main>
@@ -80,5 +86,23 @@
             menuDropdown.classList.toggle('active');
         });
     </script>
+	<script>
+		const mojFormularz = document.getElementById("formularz-komentarza");
+		const poleKomentarza = document.getElementById("komentarz-input");
+		const poleBledu = document.getElementById("komentarz-error");
+		mojFormularz.addEventListener('submit', function (event) {
+		event.preventDefault();
+		const wpisanykom = poleKomentarza.value.trim();
+		if (wpisanykom === "") {
+		poleBledu.textContent = "NIE WYSYŁAJ PUSTEGO KOMENTARZA ERUDYTO!";
+		poleKomentarza.style.borderColor = "red";
+		} else {
+		poleBledu.textContent = ""; 
+		poleKomentarza.style.borderColor = "#323232";
+		alert("KOMENTARZ ZOSTAŁ WYSŁANY!");
+		mojFormularz.reset(); 
+		}
+		});
+	</script>
 </body>
 </html>
