@@ -168,4 +168,4 @@ function WyswietlBlad() {
 
 document.addEventListener("DOMContentLoaded", () => { 
     PobierzDaneZApi(API_URL);
-});s
+});
