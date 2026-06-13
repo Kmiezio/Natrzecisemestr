@@ -1,215 +1,103 @@
 <!DOCTYPE html>
 <html lang="pl">
-	<head>
-		<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>Artykuły i Gry - Natrzecisemestr</title>
-				<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalendarz premier gier - Natrzecisemestr</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-	<body>
-		<header class="header">
-			<div class="header-menu-container">
-				<button class="header-menu-btn">☰ MENU</button>
+<body>
+    <header class="header">
+        <div class="header-menu-container">
+            <button class="header-menu-btn" type="button" aria-expanded="false">☰ MENU</button>
 
-				<div class="header-menu">
-					<a href="index.html">HOME🏚️</a>
-					<a href="artykuly.html">ARTYKULY📑</a>
-					<a href="kontakt.html">KONTAKT🧑</a>
-				</div>
-			</div>
+            <div class="header-menu">
+                <a href="index.html">HOME 🏚️</a>
+                <a href="artykuly.html">PREMIERY 📅</a>
+                <a href="kontakt.html">KONTAKT 🧑</a>
+            </div>
+        </div>
 
-			<div class="header-title">
-				<h3 id="page-title">Natrzecisemestr</h3>
-			</div>
+        <div class="header-title">
+            <h3 id="page-title">Kebab i Gry</h3>
+        </div>
 
-			<div class="header-search-box">
-				<form action="" method="get" id="search-box">
-					<input type="text" name="search" id="search-input" placeholder="Szukaj">
+        <div class="header-search-box">
+            <form action="" method="get" id="search-box">
+                <input type="search" name="search" id="search-input" placeholder="Szukaj" autocomplete="off">
             </form>
-			</div>
-		</header>
+        </div>
+    </header>
 
-		<main>
-			<div class="main-section">
-				<div class="main-section-center">
-					<h2>BAZA I RECENZJE GIER</h2>
-					<p id="opis-sekcji">Filtruj zestawienia i bazy gier według Twoich kryteriów:</p>
+    <main>
+        <div class="main-section">
+            <div class="main-section-center article-page">
+                <section class="release-section" aria-labelledby="release-heading">
+                    <div class="release-heading-row">
+                        <div>
+                            <h2 id="release-heading">KALENDARZ PREMIER GIER</h2>
+                            <p class="release-intro">Sprawdź gry, które ukażą się w najbliższym czasie.</p>
+                        </div>
+                        <p id="release-range" class="release-range">Ładowanie dat…</p>
+                    </div>
 
-					<div class="filter-container" id="kontener-filtrow">
-						<button class="filter-btn active" data-platform="all">Wszystkie Gry</button>
-						<button class="filter-btn" data-platform="cheap">
-							Tanie okazje (< 5$)</button>
-						<button class="filter-btn" data-platform="deck">Super Zniżki (> 70%)</button>
-					</div>
+                    <div class="release-toolbar" aria-label="Filtrowanie premier według platformy">
+                        <div class="release-filters" id="release-filters">
+                            <button class="release-filter active" type="button" data-platform="all">Wszystko</button>
+                            <button class="release-filter" type="button" data-platform="pc">Windows</button>
+                            <button class="release-filter" type="button" data-platform="playstation">PlayStation</button>
+                            <button class="release-filter" type="button" data-platform="xbox">Xbox</button>
+                            <button class="release-filter" type="button" data-platform="nintendo">Switch</button>
+                        </div>
 
-					<ul id="kontener-gier-artykuly" class="games-list" style="padding: 0; list-style: none;"></ul>
+                        <div class="release-navigation" aria-label="Przewijanie kalendarza">
+                            <button id="release-prev" type="button" aria-label="Przewiń w lewo">‹</button>
+                            <button id="release-next" type="button" aria-label="Przewiń w prawo">›</button>
+                        </div>
+                    </div>
 
-					<div class="load-more-box" id="sekcja-wiecej">
-						<button id="load-more-btn">ZAŁADUJ WIĘCEJ GIER ⏳</button>
-					</div>
-				</div>
-			</div>
-		</main>
+                    <div id="release-status" class="release-status" role="status">Pobieranie nadchodzących premier…</div>
+                    <div id="release-calendar" class="release-calendar" aria-live="polite"></div>
 
-		<footer class="footer">
-			<div class="footer-container">
-				<div class="footer-section">
-					<h3>Natrzecisemestr</h3>
-					<p>Strona z informacjami o grach na steamie.</p>
-				</div>
-				<div class="footer-section">
-					<h4>Nawigacja</h4>
-					<a href="index.html">HOME</a>
-					<a href="artykuly.html">ARTYKULY</a>
-					<a href="kontakt.html">KONTAKT</a>
-				</div>
-				<div class="footer-section">
-					<h4>Autorzy</h4>
-					<p>Mateusz Tomczuk</p>
-					<p>Jakub Miezio</p>
-					<p>Kuba Kirej</p>
-				</div>
-			</div>
-			<div class="footer-bottom">
-				&copy; 2026 Natrzecisemestr
-			</div>
-		</footer>
+                    <p class="rawg-credit">
+                        Dane i okładki: <a href="https://rawg.io/" target="_blank" rel="noopener noreferrer">RAWG Video Games Database</a>
+                    </p>
+                </section>
+            </div>
+        </div>
+    </main>
 
-		<script>
-			const menuBtn = document.querySelector('.header-menu-btn');
-			const menuDropdown = document.querySelector('.header-menu');
-			menuBtn.addEventListener('click', () => {
-			menuDropdown.classList.toggle('active');
-			});
-		</script>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Natrzecisemestr</h3>
+                <p>Strona z informacjami o grach.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Nawigacja</h4>
+                <a href="index.html">HOME</a>
+                <a href="artykuly.html">PREMIERY</a>
+                <a href="kontakt.html">KONTAKT</a>
+            </div>
+            <div class="footer-section">
+                <h4>Autorzy</h4>
+                <p>Mateusz Tomczuk</p>
+                <p>Jakub Miezio</p>
+                <p>Kuba Kirej</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Natrzecisemestr</div>
+    </footer>
 
-		<script>
-			const kontener = document.getElementById("kontener-gier-artykuly");
-			const przyciskWiecej = document.getElementById("load-more-btn");
-			const filtryWrapper = document.getElementById("kontener-filtrow");
-			const sekcjaWiecej = document.getElementById("sekcja-wiecej");
-			const naglowekSekcji = document.querySelector(".main-section-center h2");
-			const opisSekcji = document.getElementById("opis-sekcji");
+    <script>
+        const menuBtn = document.querySelector('.header-menu-btn');
+        const menuDropdown = document.querySelector('.header-menu');
 
-			const urlParams = new URLSearchParams(window.location.search);
-			const dynamicznyDealID = urlParams.get('dealID');
-
-			let pobraneGryAPI = [];
-			let limitWyswietlania = 3;
-			let aktualnyFiltr = "all";
-
-			if (dynamicznyDealID) {
-			filtryWrapper.style.display = "none";
-			sekcjaWiecej.style.display = "none";
-			naglowekSekcji.textContent = "SZCZEGÓŁY WYBRANEJ OFERTY";
-			opisSekcji.textContent = "Pełne informacje o wybranym tytule pobrane na żywo z bazy danych.";
-
-			fetch(`https://www.cheapshark.com/api/1.0/deals?id=${dynamicznyDealID}`)
-			.then(res => res.json())
-			.then(szczegoly => {
-			const gra = szczegoly.gameInfo;
-
-			const punktListy = document.createElement("li");
-			punktListy.style.display = "block";
-			punktListy.style.padding = "20px";
-
-			const naglowekTytulu = document.createElement("strong");
-			naglowekTytulu.textContent = gra.name;
-			naglowekTytulu.style.color = "#00ff66";
-			naglowekTytulu.style.fontSize = "1.6rem";
-			naglowekTytulu.style.display = "block";
-			naglowekTytulu.style.removeAttributeValue;
-			naglowekTytulu.style.marginBottom = "15px";
-
-			const szczegolowyOpis = document.createElement("span");
-			szczegolowyOpis.style.color = "#ccc";
-			szczegolowyOpis.style.fontSize = "16px";
-			szczegolowyOpis.style.lineHeight = "1.8";
-
-			szczegolowyOpis.innerHTML = `
-			Aktualna cena w promocji: <strong style="color: #fff; font-size: 1.2rem;">${gra.salePrice} $</strong><br>
-				Standardowa cena detaliczna: <span style="text-decoration: line-through; color: #ff5555;">${gra.retailPrice} $</span><br>
-					Oszczędność przy zakupie: <strong style="color: #00ff66;">${Math.round(((gra.retailPrice - gra.salePrice) / gra.retailPrice) * 100)}%</strong><br>
-						Ocena społeczności Steam: <strong>${gra.steamRatingText || "Brak ocen"}</strong> (${gra.steamRatingPercent}% pozytywnych recenzji)
-						`;
-
-						punktListy.appendChild(naglowekTytulu);
-						punktListy.appendChild(szczegolowyOpis);
-						kontener.appendChild(punktListy);
-						})
-						.catch(() => {
-						kontener.innerHTML = "<p style='color:red;'>Nie udało się załadować danych tej gry.</p>";
-						});
-						} else {
-						naglowekSekcji.textContent = "PRZEGLĄDAJ WSZYSTKIE OKAZJE Z API";
-
-						fetch("https://www.cheapshark.com/api/1.0/deals?storeID=1")
-						.then(res => res.json())
-						.then(dane => {
-						pobraneGryAPI = dane;
-						renderujBazeGier();
-						});
-						}
-
-						function renderujBazeGier() {
-						while (kontener.firstChild) {
-						kontener.removeChild(kontener.firstChild);
-						}
-
-						const przefiltrowane = pobraneGryAPI.filter(gra => {
-						const cena = parseFloat(gra.salePrice);
-						const oszczednosc = parseFloat(gra.savings);
-
-						if (aktualnyFiltr === "cheap") return cena < 5.00;
-                if (aktualnyFiltr === "deck") return oszczednosc > 70.00;
-                return true;
-            });
-
-            const doWyswietlenia = przefiltrowane.slice(0, limitWyswietlania);
-
-            doWyswietlenia.forEach(gra => {
-                const punktListy = document.createElement("li");
-                punktListy.style.display = "block";
-
-                const naglowekTytulu = document.createElement("strong");
-                naglowekTytulu.textContent = gra.title;
-                naglowekTytulu.style.color = "#00ff66";
-                naglowekTytulu.style.fontSize = "1.2rem";
-                naglowekTytulu.style.display = "block";
-                naglowekTytulu.style.marginBottom = "5px";
-
-                const opisGry = document.createElement("span");
-                opisGry.textContent = `Aktualna cena: ${gra.salePrice}$ (Cena normalna: ${gra.normalPrice}$). Obniżka o ${Math.round(gra.savings)}%!`;
-                opisGry.style.color = "#ccc";
-                opisGry.style.fontSize = "14px";
-
-                punktListy.appendChild(naglowekTytulu);
-                punktListy.appendChild(opisGry);
-                kontener.appendChild(punktListy);
-            });
-
-            if (limitWyswietlania >= przefiltrowane.length || przefiltrowane.length === 0) {
-                przyciskWiecej.style.display = "none";
-            } else {
-                przyciskWiecej.style.display = "inline-block";
-            }
-        }
-
-        przyciskWiecej.addEventListener("click", () => {
-            limitWyswietlania += 3;
-            renderujBazeGier();
+        menuBtn.addEventListener('click', () => {
+            const isOpen = menuDropdown.classList.toggle('active');
+            menuBtn.setAttribute('aria-expanded', String(isOpen));
         });
-
-        document.querySelectorAll(".filter-btn").forEach(przycisk => {
-            przycisk.addEventListener("click", (e) => {
-                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-                e.target.classList.add("active");
-
-                aktualnyFiltr = e.target.getAttribute("data-platform");
-                limitWyswietlania = 3;
-                renderujBazeGier();
-            });
-        });
-		</script>
-	</body>
+    </script>
+    <script src="premiery.js"></script>
+</body>
 </html>
