@@ -89,10 +89,8 @@ function createPlatformBadges(game) {
 function createGameCard(game) {
     const card = document.createElement("a");
     card.className = "release-card";
-    card.href = `https://rawg.io/games/${encodeURIComponent(game.slug)}`;
-    card.target = "_blank";
-    card.rel = "noopener noreferrer";
-    card.title = `${game.name} — premiera ${formatFullDate(game.released)}`;
+    card.href = `szczegoly-premiery.html?id=${encodeURIComponent(game.id)}`;
+    card.title = `${game.name} — zobacz szczegóły premiery ${formatFullDate(game.released)}`;
 
     const cover = document.createElement("div");
     cover.className = "release-cover";
