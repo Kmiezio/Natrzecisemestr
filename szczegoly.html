@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szczegóły Gry - Natrzecisemestr</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-menu-container">
+            <button class="header-menu-btn" type="button">☰ MENU</button>
+            <div class="header-menu">
+                <a href="index.html">HOME 🏚️</a>
+                <a href="artykuly.html">ARTYKULY 📑</a>
+                <a href="kontakt.html">KONTAKT 🧑</a>
+            </div>
+        </div>
+        <div class="header-title">
+            <h3 id="page-title">Kebab i Gry</h3>
+        </div>
+        <div class="header-search-box">
+            <form action="" method="get" id="search-box">
+                <input type="search" name="search" id="search-input" placeholder="Szukaj..." autocomplete="off">
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-section">
+            <div class="main-section-center" style="padding: 40px 20px;">
+                <div id="widok-szczegolow-gry" style="color: white; text-align: center; max-width: 700px; margin: 0 auto;">
+                    <h2 style="color: #00ff66;">Ładowanie pełnych danych o grze z API...</h2>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Natrzecisemestr</h3>
+                <p>Strona z informacjami o grach.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Nawigacja</h4>
+                <a href="index.html">HOME</a>
+                <a href="artykuly.html">ARTYKULY</a>
+                <a href="kontakt.html">KONTAKT</a>
+            </div>
+            <div class="footer-section">
+                <h4>Autorzy</h4>
+                <p>Mateusz Tomczuk</p>
+                <p>Jakub Miezio</p>
+                <p>Kuba Kirej</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Natrzecisemestr</div>
+    </footer>
+
+    <script>
+        const menuBtn = document.querySelector('.header-menu-btn');
+        const menuDropdown = document.querySelector('.header-menu');
+        if (menuBtn && menuDropdown) {
+            menuBtn.addEventListener('click', () => {
+                menuDropdown.classList.toggle('active');
+            });
+        }
+
+        const parametryAdresu = new URLSearchParams(window.location.search);
+        const przekazaneID = parametryAdresu.get('dealID');
+        const kontenerNaDane = document.getElementById('widok-szczegolow-gry');
+
+        const sklepyKody = {
+            "1": "Steam",
+            "2": "GamersGate",
+            "3": "GreenManGaming",
+            "7": "GOG",
+            "11": "Epic Games Store",
+            "25": "Epic Games"
+        };
+
+        if (przekazaneID && kontenerNaDane) {
+            fetch(`https://www.cheapshark.com/api/1.0/deals?id=${przekazaneID}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Błąd pobierania");
+                    return response.json();
+                })
+                .then(data => {
+                    const info = data.gameInfo;
+                    
+                    let dataWydania = "Brak danych";
+                    if (info.releaseDate && info.releaseDate !== 0) {
+                        const dateObj = new Date(info.releaseDate * 1000);
+                        dataWydania = dateObj.toLocaleDateString("pl-PL", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                        });
+                    }
+
+                    let ocenaGraczy = "Brak ocen w bazie";
+                    if (info.steamRatingPercent && info.steamRatingPercent !== "0") {
+                        ocenaGraczy = `⭐ ${info.steamRatingPercent}% (${info.steamRatingText})`;
+                    }
+
+                    const nazwaSklepu = sklepyKody[info.storeID] || "Autoryzowany Sklep Cyfrowy";
+
+                    kontenerNaDane.innerHTML = `
+                        <h1 style="color: #00ff66; margin-bottom: 5px; font-size: 2.2rem; font-weight: bold;">${info.name}</h1>
+                        <p style="color: #888; font-size: 14px; margin-bottom: 25px;">ID Gry: ${info.gameID} | Oferta z serwisu CheapShark</p>
+                        
+                        <img src="${info.thumb}" alt="${info.name}" style="max-width: 360px; width: 100%; border-radius: 8px; margin-bottom: 25px; background: #101010; padding: 10px; border: 2px solid #323232; box-shadow: 0 4px 15px rgba(0,255,102,0.15);">
+                        
+                        <div style="background: #151515; padding: 25px; border-radius: 8px; border: 1px solid #323232; margin-bottom: 30px; text-align: left; display: grid; gap: 15px;">
+                            
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #252525; padding-bottom: 10px;">
+                                <span style="color: #aaa;">📅 Data premiery:</span>
+                                <strong style="color: #ffffff;">${dataWydania}</strong>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #252525; padding-bottom: 10px;">
+                                <span style="color: #aaa;">🎮 Ocena na Steam:</span>
+                                <strong style="color: #00ff66;">${ocenaGraczy}</strong>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #252525; padding-bottom: 10px;">
+                                <span style="color: #aaa;">🛒 Gdzie kupić:</span>
+                                <strong style="color: #ffffff; background: #222; padding: 2px 10px; border-radius: 4px; border: 1px solid #444;">${nazwaSklepu}</strong>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #252525; padding-bottom: 10px;">
+                                <span style="color: #aaa;">💰 Cena w promocji:</span>
+                                <strong style="color: #ffffff; font-size: 1.2rem;">${info.salePrice} $</strong>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; padding-bottom: 5px;">
+                                <span style="color: #aaa;">❌ Cena bez przeceny:</span>
+                                <span style="text-decoration: line-through; color: #ff5555; font-weight: bold;">${info.retailPrice} $</span>
+                            </div>
+
+                        </div>
+                        
+                        <a href="https://www.cheapshark.com/redirect?dealID=${przekazaneID}" target="_blank" style="display: inline-block; background: #00ff66; color: black; padding: 14px 35px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 16px; box-shadow: 0 4px 10px rgba(0,255,102,0.3); transition: 0.2s;">Kup grę bezpośrednio w sklepie 🛒</a>
+                        <br><br>
+                        <a href="index.html" style="color: #aaa; text-decoration: underline; font-size: 14px; display: inline-block; margin-top: 15px;">← Wróć do listy gier</a>
+                    `;
+                })
+                .catch((err) => {
+                    console.error(err);
+                    kontenerNaDane.innerHTML = `<p style="color: #ff3333; font-weight: bold;">Nie udało się załadować rozszerzonych informacji o tej grze z API.</p>`;
+                });
+        } else if (kontenerNaDane) {
+            kontenerNaDane.innerHTML = `<p>Nie wybrano żadnej gry. Wróć na <a href="index.html" style="color: #00ff66;">stronę główną</a>.</p>`;
+        }
+    </script>
+</body>
+</html>
