@@ -66,7 +66,7 @@ function RenderujGry() {
     doWyswietlenia.forEach(jednaGra => {
         const kartagier = document.createElement("a");
         kartagier.className = "game-card";
-        kartagier.href = `artykuly.html?dealID=${jednaGra.dealID}`;
+        kartagier.href = `szczegoly.html?dealID=${encodeURIComponent(jednaGra.dealID)}`;
         kartagier.style.textDecoration = "none"; 
 
         const elObrazek = document.createElement("img");
