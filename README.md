@@ -21,6 +21,7 @@ Stworzenie bibliotegi gier coś w stylu SteamDB (plan jest o wyszukiwaniu gier i
 * **`kontakt-form.js` / `kontakt-form.css`** – logika dynamicznego formularza, walidacja danych, system ocen oraz przechowywanie opinii w `localStorage`.
 * **`premiery.html` / `premiery.js`** – kalendarz nadchodzących premier gier, integracja z zewnętrznym RAWG API oraz filtrowanie wyników po datach i platformach.
 * **`szczegoly-premiery.html` / `szczegoly-premiery.js`** – dynamiczny widok szczegółowych informacji o wybranej z kalendarza premierze gry.
+* **`kontakt.html`** – oraz struktura kontenerów dla sekcji opinii użytkowników.
 
 ###  Kuba Kirej
 * **`index.html` / `script.js`** – strona główna serwisu, integracja z CheapShark API (baza promocji cenowych), wyszukiwarka ofert oraz mechanizm „Załaduj więcej”.
