@@ -41,13 +41,25 @@
                         <p id="release-range" class="release-range">Ładowanie dat…</p>
                     </div>
 
-                    <div class="release-toolbar" aria-label="Filtrowanie premier według platformy">
-                        <div class="release-filters" id="release-filters">
-                            <button class="release-filter active" type="button" data-platform="all">Wszystko</button>
-                            <button class="release-filter" type="button" data-platform="pc">Windows</button>
-                            <button class="release-filter" type="button" data-platform="playstation">PlayStation</button>
-                            <button class="release-filter" type="button" data-platform="xbox">Xbox</button>
-                            <button class="release-filter" type="button" data-platform="nintendo">Switch</button>
+                    <div class="release-toolbar" aria-label="Filtrowanie premier">
+                        <div class="release-controls">
+                            <div class="release-filters" id="release-filters" aria-label="Platformy">
+                                <button class="release-filter active" type="button" data-platform="all" aria-pressed="true">Wszystko</button>
+                                <button class="release-filter" type="button" data-platform="pc" aria-pressed="false">Windows</button>
+                                <button class="release-filter" type="button" data-platform="playstation" aria-pressed="false">PlayStation</button>
+                                <button class="release-filter" type="button" data-platform="xbox" aria-pressed="false">Xbox</button>
+                                <button class="release-filter" type="button" data-platform="nintendo" aria-pressed="false">Switch</button>
+                            </div>
+
+                            <form id="release-date-form" class="release-date-form">
+                                <label for="release-date-from">Od</label>
+                                <input id="release-date-from" type="date" required>
+
+                                <label for="release-date-to">Do</label>
+                                <input id="release-date-to" type="date" required>
+
+                                <button type="submit">Pokaż</button>
+                            </form>
                         </div>
 
                         <div class="release-navigation" aria-label="Przewijanie kalendarza">

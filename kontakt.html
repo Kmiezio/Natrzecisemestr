@@ -5,48 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Natrzecisemestr - Kontakt</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="kontakt-form.css">
 </head>
 <body>
     <header class="header">
         <div class="header-menu-container">
-            <button class="header-menu-btn">☰ MENU</button>
-            
-            <div class="header-menu">
-				<a href="index.html">HOME 🏚️</a>
-				<a href="premiery.html">PREMIERY 📅</a>
-				<a href="kontakt.html">KONTAKT 🧑</a>
+            <button class="header-menu-btn" type="button" aria-expanded="false" aria-controls="header-menu">
+                ☰ MENU
+            </button>
+
+            <div class="header-menu" id="header-menu">
+                <a href="index.html">HOME 🏚️</a>
+                <a href="premiery.html">PREMIERY 📅</a>
+                <a href="kontakt.html">KONTAKT 🧑</a>
             </div>
         </div>
 
         <div class="header-title">
-            <h3 id="page-title">Natrzecisemestr</h3>
+            <h3 id="page-title">Kebab i Gry</h3>
         </div>
 
         <div class="header-search-box">
-            <form action="" method="get" id="search-box">
-                <input type="text" name="search" id="search-input" placeholder="Szukaj">
+            <form action="index.html" method="get" id="search-box">
+                <input
+                    type="search"
+                    name="search"
+                    id="search-input"
+                    placeholder="Szukaj gry"
+                    aria-label="Szukaj gry"
+                >
             </form>
         </div>
     </header>
 
     <main>
         <div class="main-section">
-            <div class="main-section-center">
-            <h2>DANE AUTORÓW</h2>
-				<ul class="games-list">
-				<li><strong>Skład zespołu :</strong>&nbsp; Jakub Miezio, Mateusz Tomczuk, Kuba Kirej</li>
-				<li><strong>Grupa:</strong>&nbsp; Informatyka, Semestr 2</li>
-				<li><strong>Status projektu:</strong>&nbsp; Ukończony</li>
-				</ul>
-                <h2>Kontakt</h2>
-				<p>Email: <span style="color:#ffffff">SuperPrawdziwyEmail@Linux.Arch </span>
-				<p>Telefon:<span style="color:#ffffff"> 123 456 789</span></p>
-						<h2>WYŚLIJ KOMENTARZ</h2>
-					    <form id="formularz-komentarza">
-					    <input type="text" id="komentarz-input" placeholder="Napisz komentarz" style="width: 100%; max-width: 400px; padding: 10px; background-color: #202020; color: white; border: 2px solid #323232; border-radius: 8px;">
-						<span id="komentarz-error" style="color: red; display: block; margin-top: 5px; font-weight: bold;"></span>
-						<p><button type="submit" style="background-color: #202020; color:#00ff66; padding: 10px 20px; border: 2px solid #323232; border-radius: 8px; cursor: pointer;">Wyślij komentarz</button></p>
-				</form>
+            <div class="main-section-center contact-page">
+                <section aria-labelledby="authors-heading">
+                    <h2 id="authors-heading">DANE AUTORÓW</h2>
+
+                    <ul class="games-list">
+                        <li><strong>Skład zespołu:</strong>&nbsp; Jakub Miezio, Mateusz Tomczuk, Kuba Kirej</li>
+                        <li><strong>Grupa:</strong>&nbsp; Informatyka, Semestr 2</li>
+                        <li><strong>Status projektu:</strong>&nbsp; W trakcie realizacji</li>
+                    </ul>
+                </section>
+
+                <section class="comment-section" aria-labelledby="comment-heading">
+                    <h2 id="comment-heading">WYŚLIJ KOMENTARZ</h2>
+                    <p class="form-intro">
+                        Wszystkie pola oznaczone gwiazdką są wymagane.
+                    </p>
+
+                    <form id="comment-form" novalidate>
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="comment-name">Imię *</label>
+                                <input
+                                    type="text"
+                                    id="comment-name"
+                                    name="name"
+                                    minlength="2"
+                                    maxlength="40"
+                                    autocomplete="name"
+                                    required
+                                >
+                                <span class="field-error" id="name-error" aria-live="polite"></span>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="comment-email">E-mail *</label>
+                                <input
+                                    type="email"
+                                    id="comment-email"
+                                    name="email"
+                                    maxlength="100"
+                                    autocomplete="email"
+                                    required
+                                >
+                                <span class="field-error" id="email-error" aria-live="polite"></span>
+                            </div>
+
+                            <fieldset class="form-field form-field-full rating-field">
+                                <legend>Ocena strony *</legend>
+
+                                <div class="rating-options">
+                                    <label><input type="radio" name="rating" value="1"> 1</label>
+                                    <label><input type="radio" name="rating" value="2"> 2</label>
+                                    <label><input type="radio" name="rating" value="3"> 3</label>
+                                    <label><input type="radio" name="rating" value="4"> 4</label>
+                                    <label><input type="radio" name="rating" value="5"> 5</label>
+                                </div>
+
+                                <span class="field-error" id="rating-error" aria-live="polite"></span>
+                            </fieldset>
+
+                            <div class="form-field form-field-full">
+                                <div class="label-row">
+                                    <label for="comment-message">Treść komentarza *</label>
+                                    <span id="message-counter">0/500</span>
+                                </div>
+
+                                <textarea
+                                    id="comment-message"
+                                    name="message"
+                                    rows="6"
+                                    minlength="10"
+                                    maxlength="500"
+                                    required
+                                ></textarea>
+
+                                <span class="field-error" id="message-error" aria-live="polite"></span>
+                            </div>
+
+                            <div class="form-field form-field-full consent-field">
+                                <label>
+                                    <input type="checkbox" id="comment-consent" required>
+                                    Zgadzam się na zapisanie komentarza w pamięci przeglądarki. *
+                                </label>
+                                <span class="field-error" id="consent-error" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" id="submit-comment">Wyślij komentarz</button>
+                            <button type="button" id="cancel-edit" hidden>Anuluj edycję</button>
+                        </div>
+
+                        <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+                    </form>
+                </section>
+
+                <section class="saved-comments-section" aria-labelledby="saved-comments-heading">
+                    <div class="saved-comments-header">
+                        <h2 id="saved-comments-heading">ZAPISANE KOMENTARZE</h2>
+                        <span id="comments-count">0 komentarzy</span>
+                    </div>
+
+                    <div id="comments-list" class="comments-list"></div>
+                    <p id="empty-comments" class="empty-comments">
+                        Brak zapisanych komentarzy.
+                    </p>
+                </section>
             </div>
         </div>
     </main>
@@ -55,14 +155,14 @@
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Natrzecisemestr</h3>
-                <p>Strona z informacjami o grach na steamie.</p>
+                <p>Strona z informacjami o grach.</p>
             </div>
 
             <div class="footer-section">
                 <h4>Nawigacja</h4>
-				<a href="index.html">HOME</a>
-				<a href="premiery.html">PREMIERY</a>
-				<a href="kontakt.html">KONTAKT</a>
+                <a href="index.html">HOME</a>
+                <a href="premiery.html">PREMIERY</a>
+                <a href="kontakt.html">KONTAKT</a>
             </div>
 
             <div class="footer-section">
@@ -73,36 +173,9 @@
             </div>
         </div>
 
-        <div class="footer-bottom">
-            &copy; 2026 Natrzecisemestr
-        </div>
+        <div class="footer-bottom">&copy; 2026 Natrzecisemestr</div>
     </footer>
 
-    <script>
-        const menuBtn = document.querySelector('.header-menu-btn');
-        const menuDropdown = document.querySelector('.header-menu');
-
-        menuBtn.addEventListener('click', () => {
-            menuDropdown.classList.toggle('active');
-        });
-    </script>
-	<script>
-		const mojFormularz = document.getElementById("formularz-komentarza");
-		const poleKomentarza = document.getElementById("komentarz-input");
-		const poleBledu = document.getElementById("komentarz-error");
-		mojFormularz.addEventListener('submit', function (event) {
-		event.preventDefault();
-		const wpisanykom = poleKomentarza.value.trim();
-		if (wpisanykom === "") {
-		poleBledu.textContent = "NIE WYSYŁAJ PUSTEGO KOMENTARZA ERUDYTO!";
-		poleKomentarza.style.borderColor = "red";
-		} else {
-		poleBledu.textContent = ""; 
-		poleKomentarza.style.borderColor = "#323232";
-		alert("KOMENTARZ ZOSTAŁ WYSŁANY!");
-		mojFormularz.reset(); 
-		}
-		});
-	</script>
+    <script src="kontakt-form.js"></script>
 </body>
 </html>

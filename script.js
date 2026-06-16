@@ -9,17 +9,15 @@ let pobraneGry = [];
 let aktualnyFiltr = "all";
 let limitGier = 20;
 
-if (wyszukiwarka) {
-    wyszukiwarka.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const wpisanyTekst = wpisane.value.trim();
-        if(wpisanyTekst !== "") {
-            const SZUKANA = `https://www.cheapshark.com/api/1.0/deals?title=${wpisanyTekst}`;
-            limitGier = 20;
-            PobierzDaneZApi(SZUKANA);
-        }
-    });
-}
+wyszukiwarka.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const wpisanyTekst = wpisane.value.trim();
+    if(wpisanyTekst !== "") {
+        const SZUKANA = `https://www.cheapshark.com/api/1.0/deals?title=${wpisanyTekst}`;
+        limitGier = 20;
+        PobierzDaneZApi(SZUKANA);
+    }
+});
 
 function PobierzDaneZApi(ZmiennyApi) {
     fetch(ZmiennyApi)
@@ -58,6 +56,7 @@ function RenderujGry() {
         const brakWynikow = document.createElement("p");
         brakWynikow.textContent = "Brak gier spełniających kryteria.";
         brakWynikow.style.textAlign = "center";
+        glownykontener.appendChild(brakWynikow);
         if (przyciskWiecej) przyciskWiecej.style.display = "none";
         return;
     }
@@ -67,7 +66,7 @@ function RenderujGry() {
     doWyswietlenia.forEach(jednaGra => {
         const kartagier = document.createElement("a");
         kartagier.className = "game-card";
-        kartagier.href = `szczegoly.html?dealID=${jednaGra.dealID}`;
+        kartagier.href = `artykuly.html?dealID=${jednaGra.dealID}`;
         kartagier.style.textDecoration = "none"; 
 
         const elObrazek = document.createElement("img");

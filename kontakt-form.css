@@ -1,0 +1,226 @@
+.contact-page {
+    padding-top: 40px;
+}
+
+.form-intro {
+    margin-top: -10px;
+}
+
+#comment-form {
+    max-width: 850px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-field label,
+.rating-field legend {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    border: 2px solid #323232;
+    border-radius: 8px;
+    background: #202020;
+    color: #ffffff;
+    padding: 12px 14px;
+    font: inherit;
+}
+
+.form-field textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus,
+.form-actions button:focus-visible,
+.comment-actions button:focus-visible {
+    border-color: #00ff66;
+    outline: 3px solid rgba(0, 255, 102, 0.25);
+    outline-offset: 2px;
+}
+
+.form-field-full {
+    grid-column: 1 / -1;
+}
+
+.label-row,
+.saved-comments-header,
+.comment-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+#message-counter,
+#comments-count,
+.comment-card time {
+    color: #9b9b9b;
+    font-size: 0.85rem;
+}
+
+.field-error {
+    min-height: 18px;
+    color: #ff6666;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.rating-field {
+    margin: 0;
+    padding: 14px;
+    border: 1px solid #323232;
+    border-radius: 8px;
+}
+
+.rating-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.rating-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #202020;
+    cursor: pointer;
+}
+
+.rating-options input,
+.consent-field input {
+    width: auto;
+}
+
+.consent-field label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.form-actions button,
+.comment-actions button {
+    border: 2px solid #323232;
+    border-radius: 8px;
+    background: #202020;
+    color: #00ff66;
+    padding: 11px 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.form-actions button:hover,
+.comment-actions button:hover {
+    border-color: #00ff66;
+}
+
+#cancel-edit {
+    color: #ffffff;
+}
+
+.form-status {
+    min-height: 24px;
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+.form-status.success {
+    color: #00ff66;
+}
+
+.form-status.error {
+    color: #ff6666;
+}
+
+.form-status.info {
+    color: #dddddd;
+}
+
+.saved-comments-section {
+    margin-top: 45px;
+}
+
+.comments-list {
+    display: grid;
+    gap: 15px;
+}
+
+.comment-card {
+    padding: 18px;
+    border: 1px solid rgba(0, 255, 102, 0.25);
+    border-left: 4px solid #00ff66;
+    border-radius: 7px;
+    background: rgba(0, 255, 102, 0.04);
+}
+
+.comment-card-header {
+    align-items: baseline;
+}
+
+.comment-card-header strong {
+    color: #00ff66;
+    font-size: 1.05rem;
+}
+
+.comment-meta {
+    margin: 8px 0;
+    color: #aaaaaa;
+}
+
+.comment-message {
+    margin: 10px 0 16px;
+    color: #eeeeee;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.comment-actions .delete-comment {
+    color: #ff6666;
+}
+
+.empty-comments {
+    color: #999999;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
