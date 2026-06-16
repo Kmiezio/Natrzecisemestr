@@ -11,9 +11,12 @@ const previousButton = document.getElementById("release-prev");
 const nextButton = document.getElementById("release-next");
 const searchForm = document.getElementById("search-box");
 const searchInput = document.getElementById("search-input");
+const dateForm = document.getElementById("release-date-form");
+const dateFromInput = document.getElementById("release-date-from");
+const dateToInput = document.getElementById("release-date-to");
 
 let upcomingGames = [];
-let activePlatform = "all";
+let selectedPlatforms = new Set();
 let searchPhrase = "";
 
 function toApiDate(date) {
@@ -48,8 +51,10 @@ function getPlatformSlugs(game) {
 }
 
 function matchesPlatform(game) {
-    if (activePlatform === "all") return true;
-    return getPlatformSlugs(game).includes(activePlatform);
+    if (selectedPlatforms.size === 0) return true;
+
+    const gamePlatforms = getPlatformSlugs(game);
+    return [...selectedPlatforms].some(platform => gamePlatforms.includes(platform));
 }
 
 function matchesSearch(game) {
@@ -64,34 +69,10 @@ function createPlaceholder() {
     return placeholder;
 }
 
-function createPlatformBadges(game) {
-    const slugs = getPlatformSlugs(game);
-    const labels = {
-        pc: "PC",
-        playstation: "PS",
-        xbox: "XBOX",
-        nintendo: "SWITCH"
-    };
-
-    const badges = document.createElement("div");
-    badges.className = "release-platforms";
-
-    Object.entries(labels).forEach(([slug, label]) => {
-        if (!slugs.includes(slug)) return;
-        const badge = document.createElement("span");
-        badge.textContent = label;
-        badges.appendChild(badge);
-    });
-
-    return badges;
-}
-
 function createGameCard(game) {
     const card = document.createElement("a");
     card.className = "release-card";
-    card.href = `https://rawg.io/games/${encodeURIComponent(game.slug)}`;
-    card.target = "_blank";
-    card.rel = "noopener noreferrer";
+    card.href = `szczegoly-premiery.html?id=${encodeURIComponent(game.id)}`;
     card.title = `${game.name} — premiera ${formatFullDate(game.released)}`;
 
     const cover = document.createElement("div");
@@ -107,8 +88,6 @@ function createGameCard(game) {
     } else {
         cover.appendChild(createPlaceholder());
     }
-
-    cover.appendChild(createPlatformBadges(game));
 
     const title = document.createElement("h2");
     title.textContent = game.name;
@@ -137,24 +116,35 @@ function renderGames() {
         .filter(matchesSearch);
 
     if (visibleGames.length === 0) {
-        statusBox.hidden = false;
-        statusBox.textContent = "Brak premier pasujących do wybranego filtra.";
+        statusBox.style.display = "grid";
+        statusBox.textContent = "Brak premier pasujących do wybranych platform i dat.";
         return;
     }
 
-    statusBox.hidden = true;
+    statusBox.style.display = "none";
     visibleGames.forEach(game => calendar.appendChild(createGameCard(game)));
     calendar.scrollTo({ left: 0, behavior: "smooth" });
 }
 
-async function loadUpcomingGames() {
-    const today = new Date();
-    const endDate = new Date(today);
-    endDate.setDate(endDate.getDate() + DAYS_AHEAD);
+function updatePlatformButtons() {
+    const allButton = filters.querySelector('[data-platform="all"]');
+    const platformButtons = filters.querySelectorAll('[data-platform]:not([data-platform="all"])');
+    const allSelected = selectedPlatforms.size === 0;
 
-    const start = toApiDate(today);
-    const end = toApiDate(endDate);
+    allButton.classList.toggle("active", allSelected);
+    allButton.setAttribute("aria-pressed", String(allSelected));
 
+    platformButtons.forEach(button => {
+        const selected = selectedPlatforms.has(button.dataset.platform);
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+    });
+}
+
+async function loadUpcomingGames(start, end) {
+    statusBox.style.display = "grid";
+    statusBox.textContent = "Pobieranie nadchodzących premier…";
+    calendar.replaceChildren();
     rangeBox.textContent = `${formatFullDate(start)} – ${formatFullDate(end)}`;
 
     const params = new URLSearchParams({
@@ -179,7 +169,7 @@ async function loadUpcomingGames() {
         renderGames();
     } catch (error) {
         console.error("Nie udało się pobrać premier:", error);
-        statusBox.hidden = false;
+        statusBox.style.display = "grid";
         statusBox.textContent = "Nie udało się pobrać premier. Sprawdź połączenie, klucz API i uruchom stronę przez lokalny serwer.";
     }
 }
@@ -188,13 +178,39 @@ filters.addEventListener("click", event => {
     const button = event.target.closest(".release-filter");
     if (!button) return;
 
-    document.querySelectorAll(".release-filter").forEach(item => {
-        item.classList.remove("active");
-    });
+    const platform = button.dataset.platform;
 
-    button.classList.add("active");
-    activePlatform = button.dataset.platform;
+    if (platform === "all") {
+        selectedPlatforms.clear();
+    } else if (selectedPlatforms.has(platform)) {
+        selectedPlatforms.delete(platform);
+    } else {
+        selectedPlatforms.add(platform);
+    }
+
+    updatePlatformButtons();
     renderGames();
+});
+
+dateForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const start = dateFromInput.value;
+    const end = dateToInput.value;
+
+    if (!start || !end) {
+        statusBox.style.display = "grid";
+        statusBox.textContent = "Wybierz datę początkową i końcową.";
+        return;
+    }
+
+    if (start > end) {
+        statusBox.style.display = "grid";
+        statusBox.textContent = "Data początkowa nie może być późniejsza niż data końcowa.";
+        return;
+    }
+
+    loadUpcomingGames(start, end);
 });
 
 searchForm.addEventListener("submit", event => {
@@ -217,4 +233,16 @@ nextButton.addEventListener("click", () => {
     calendar.scrollBy({ left: calendar.clientWidth * 0.8, behavior: "smooth" });
 });
 
-loadUpcomingGames();
+const today = new Date();
+const endDate = new Date(today);
+endDate.setDate(endDate.getDate() + DAYS_AHEAD);
+
+const defaultStart = toApiDate(today);
+const defaultEnd = toApiDate(endDate);
+
+dateFromInput.value = defaultStart;
+dateToInput.value = defaultEnd;
+dateFromInput.min = defaultStart;
+dateToInput.min = defaultStart;
+
+loadUpcomingGames(defaultStart, defaultEnd);
